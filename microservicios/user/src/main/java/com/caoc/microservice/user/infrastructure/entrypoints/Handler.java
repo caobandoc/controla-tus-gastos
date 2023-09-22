@@ -13,19 +13,22 @@ import reactor.core.publisher.Mono;
 public class Handler {
     private final UserUseCase userUseCase;
     public Mono<ServerResponse> getAllUsers(ServerRequest serverRequest) {
-        return ServerResponse.ok().body(userUseCase.getAllUsers(), User.class)
+        return userUseCase.getAllUsers()
+                .collectList()
+                .flatMap(users -> ServerResponse.ok().bodyValue(users))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
-    public Mono<ServerResponse> getUserById(ServerRequest serverRequest) {
-        return ServerResponse.ok().body(userUseCase.getUserByEmail(serverRequest.pathVariable("id")), User.class)
+    public Mono<ServerResponse> getUserByEmail(ServerRequest serverRequest) {
+        return userUseCase.getUserByEmail(serverRequest.pathVariable("email"))
+                .flatMap(user -> ServerResponse.ok().bodyValue(user))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
-        return serverRequest
-                .bodyToMono(User.class)
-                .flatMap(user -> ServerResponse.ok().body(userUseCase.save(user), User.class))
-                .switchIfEmpty(ServerResponse.notFound().build());
+        return serverRequest.bodyToMono(User.class)
+                .flatMap(userUseCase::save)
+                .flatMap(userSaved -> ServerResponse.ok().bodyValue(userSaved))
+                .switchIfEmpty(ServerResponse.badRequest().build());
     }
 }

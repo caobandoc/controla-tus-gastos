@@ -1,6 +1,6 @@
 package com.caoc.microservice.user.infrastructure.entrypoints;
 
-import com.caoc.microservice.user.domain.model.User;
+import com.caoc.microservice.user.domain.model.UserDto;
 import com.caoc.microservice.user.domain.usecase.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +24,15 @@ public class Handler {
 
     public Mono<ServerResponse> getUserByEmail(ServerRequest serverRequest) {
         return userUseCase.getUserByEmail(serverRequest.pathVariable("email"))
-                .flatMap(user -> ServerResponse.ok().bodyValue(user))
+                .flatMap(userDto -> ServerResponse.ok().bodyValue(userDto))
                 .switchIfEmpty(ServerResponse.notFound().build())
                 .doOnNext(user -> log.info("User: {}", user));
     }
 
     public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
-        return serverRequest.bodyToMono(User.class)
+        return serverRequest.bodyToMono(UserDto.class)
                 .flatMap(userUseCase::save)
-                .flatMap(userSaved -> ServerResponse.ok().bodyValue(userSaved))
+                .flatMap(userDtoSaved -> ServerResponse.ok().bodyValue(userDtoSaved))
                 .switchIfEmpty(ServerResponse.badRequest().build())
                 .doOnNext(user -> log.info("User: {}", user));
     }

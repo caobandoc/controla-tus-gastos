@@ -11,8 +11,8 @@ import reactor.core.publisher.Mono;
 public class AuthUserRepository {
     private final IAuthUserCrudRepository authUserCrudRepository;
 
-    public Mono<AuthUser> findByUserName(String userName) {
-        return authUserCrudRepository.findByUserName(userName);
+    public Mono<AuthUser> findByUsername(String username) {
+        return authUserCrudRepository.findByUsername(username);
     }
 
 
@@ -20,7 +20,7 @@ public class AuthUserRepository {
         return authUserCrudRepository.save(authUser);
     }
 
-    public Mono<Boolean> existsByUserName(String userName) {
-        return authUserCrudRepository.existsByUserName(userName);
+    public Mono<Boolean> existsByUsername(String userName) {
+        return authUserCrudRepository.existsByUsername(userName);
     }
 }

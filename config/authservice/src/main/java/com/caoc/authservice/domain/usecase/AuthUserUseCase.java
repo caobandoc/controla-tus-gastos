@@ -18,7 +18,7 @@ public class AuthUserUseCase {
     private final ObjectMapper objectMapper;
 
     public Mono<AuthUserDto> save(AuthUserDto dto){
-        return authUserRepository.existsByUserName(dto.getUserName())
+        return authUserRepository.existsByUsername(dto.getUsername())
                 .flatMap(exists -> {
                     if (exists) {
                         return Mono.error(new RuntimeException("User already exists"));
@@ -26,7 +26,7 @@ public class AuthUserUseCase {
                     return Mono.just(dto);
                 })
                 .map(dto1 -> AuthUser.builder()
-                        .userName(dto1.getUserName())
+                        .username(dto1.getUsername())
                         .password(passwordEncoder.encode(dto1.getPassword()))
                         .build())
                 .flatMap(authUserRepository::save)
@@ -34,7 +34,7 @@ public class AuthUserUseCase {
     }
 
     public Mono<TokenDto> login(AuthUserDto dto){
-        return authUserRepository.findByUserName(dto.getUserName())
+        return authUserRepository.findByUsername(dto.getUsername())
                 .map(authUser -> {
                     if (passwordEncoder.matches(dto.getPassword(), authUser.getPassword()))
                         return TokenDto.builder()
@@ -49,7 +49,7 @@ public class AuthUserUseCase {
         return Mono.just(token)
                 .filter(jwtProvider::validate)
                 .map(jwtProvider::getUSerNameFromToken)
-                .flatMap(authUserRepository::findByUserName)
+                .flatMap(authUserRepository::findByUsername)
                 .map(authUser -> TokenDto.builder()
                         .token(token)
                         .build())

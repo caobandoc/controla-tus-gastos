@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
 public interface IAuthUserCrudRepository extends ReactiveMongoRepository<AuthUser, String> {
-    Mono<AuthUser> findByUserName(String userName);
-    Mono<Boolean> existsByUserName(String userName);
+    Mono<AuthUser> findByUsername(String userName);
+    Mono<Boolean> existsByUsername(String userName);
 }

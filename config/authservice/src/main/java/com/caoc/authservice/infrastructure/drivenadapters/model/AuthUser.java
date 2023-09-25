@@ -16,7 +16,7 @@ import java.util.Collections;
 public class AuthUser implements UserDetails {
     @Id
     private String id;
-    private String userName;
+    private String username;
     private String password;
 
     @Override
@@ -26,7 +26,7 @@ public class AuthUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     @Override

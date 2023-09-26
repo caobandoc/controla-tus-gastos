@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtProvider {
+public class JwtProvider{
 
     @Value("${jwt.secret}")
     private String secret;

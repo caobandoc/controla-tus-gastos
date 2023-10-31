@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: file:///G:/ESTUDIO/controla-tus-gastos/ignore
+          uri: file:///F:/ESTUDIO/controla-tus-gastos/ignore
           #uri: /media/caobandoc/DATAEx/ESTUDIO/controla-tus-gastos/ignore
 server:
   port: 8888

@@ -3,6 +3,7 @@ package com.caoc.microservice.user.domain.usecase;
 import com.caoc.microservice.user.domain.model.UserDto;
 import com.caoc.microservice.user.infrastructure.drivenadapters.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -10,6 +11,7 @@ import reactor.core.publisher.Mono;
 public class UserUseCase {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     public Flux<UserDto> getAllUsers() {
         return userRepository.findAll();
     }
@@ -19,6 +21,7 @@ public class UserUseCase {
     }
 
     public Mono<UserDto> save(UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return userRepository.save(userDto);
     }
 }

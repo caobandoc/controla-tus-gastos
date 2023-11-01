@@ -15,12 +15,4 @@ public class AuthUserRepository {
         return authUserCrudRepository.findByUsername(username);
     }
 
-
-    public Mono<AuthUser> save(AuthUser authUser) {
-        return authUserCrudRepository.save(authUser);
-    }
-
-    public Mono<Boolean> existsByUsername(String userName) {
-        return authUserCrudRepository.existsByUsername(userName);
-    }
 }

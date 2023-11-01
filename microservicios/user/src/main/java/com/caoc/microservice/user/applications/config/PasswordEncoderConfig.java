@@ -1,4 +1,4 @@
-package com.caoc.authservice.applications.security;
+package com.caoc.microservice.user.applications.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

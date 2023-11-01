@@ -15,8 +15,7 @@ public class RouterRest {
         return route()
                 .path("/api/v1/auth", builder -> builder
                         .POST("/login", handler::login)
-                        .POST("/validate", handler::validate)
-                        .POST("/create", handler::create))
+                        .POST("/validate", handler::validate))
                 .build();
     }
 }

@@ -6,5 +6,4 @@ import reactor.core.publisher.Mono;
 
 public interface IAuthUserCrudRepository extends ReactiveMongoRepository<AuthUser, String> {
     Mono<AuthUser> findByUsername(String userName);
-    Mono<Boolean> existsByUsername(String userName);
 }

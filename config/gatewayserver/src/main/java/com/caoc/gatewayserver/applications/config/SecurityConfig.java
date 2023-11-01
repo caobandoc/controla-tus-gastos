@@ -9,8 +9,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
-        http.authorizeExchange(exchanges -> exchanges.anyExchange().permitAll());
-        http.csrf(ServerHttpSecurity.CsrfSpec::disable);
+        http.authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
+                        .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                        .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable);
         return http.build();
     }
 }

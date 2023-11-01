@@ -40,19 +40,4 @@ public class Handler {
                 .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
     }
 
-    public Mono<ServerResponse> create(ServerRequest request) {
-        return request
-                .bodyToMono(AuthUserDto.class)
-                .map(dto -> {
-                    Errors errors = new BeanPropertyBindingResult(dto, AuthUserDto.class.getName());
-                    validator.validate(dto, errors);
-                    if (errors.hasErrors())
-                        throw new RuntimeException("Invalid data");
-                    return dto;
-                })
-                .flatMap(authUserUseCase::save)
-                .flatMap(authUserDto -> ServerResponse.ok().bodyValue(authUserDto))
-                .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
-    }
-
 }

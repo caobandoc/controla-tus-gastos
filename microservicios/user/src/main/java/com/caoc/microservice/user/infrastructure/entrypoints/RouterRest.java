@@ -14,9 +14,9 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route()
                 .path("/api/v1/user", builder -> builder
-                        .GET("/", handler::getAllUsers)
+                        .GET("", handler::getAllUsers)
                         .GET("/{id}", handler::getUserByEmail)
-                        .POST("/", handler::saveUser))
+                        .POST("", handler::saveUser))
                 .build();
     }
 }

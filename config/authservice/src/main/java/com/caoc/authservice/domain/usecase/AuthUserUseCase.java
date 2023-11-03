@@ -24,7 +24,7 @@ public class AuthUserUseCase {
                                     .token(jwtProvider.createToken(authUser))
                                     .build();
                         } catch (JsonProcessingException e) {
-                            return null;
+                            throw new RuntimeException(e);
                         }
                     }
                     return null;

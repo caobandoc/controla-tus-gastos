@@ -1,10 +1,10 @@
 package com.caoc.microservice.user.infrastructure.drivenadapters.crud;
 
-import com.caoc.documents.AuthUser;
+import com.caoc.documents.Role;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
-public interface IUserCrudRepository extends ReactiveMongoRepository<AuthUser, String> {
+public interface IRoleCrudRepository extends ReactiveMongoRepository<Role, String> {
 
-    Mono<AuthUser> findByEmail(String email);
+    Mono<Role> findByName(String name);
 }

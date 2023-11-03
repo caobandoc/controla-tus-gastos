@@ -4,6 +4,7 @@ import com.caoc.authservice.domain.model.AuthUserDto;
 import com.caoc.authservice.domain.usecase.AuthUserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -27,7 +28,7 @@ public class Handler {
                     Errors errors = new BeanPropertyBindingResult(dto, AuthUserDto.class.getName());
                     validator.validate(dto, errors);
                     if (errors.hasErrors())
-                        throw new RuntimeException("Invalid data");
+                        throw new RuntimeException(errors.getAllErrors().getFirst().getDefaultMessage());
                     return dto;
                 })
                 .flatMap(authUserUseCase::login)
@@ -35,7 +36,8 @@ public class Handler {
                 .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
     }
     public Mono<ServerResponse> validate(ServerRequest request) {
-        return authUserUseCase.validate(request.queryParam("token").orElseThrow(RuntimeException::new))
+        return authUserUseCase.validate(request.headers()
+                        .header(HttpHeaders.AUTHORIZATION).get(0).replace("Bearer ", ""))
                 .flatMap(tokenDto -> ServerResponse.ok().bodyValue(tokenDto))
                 .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
     }

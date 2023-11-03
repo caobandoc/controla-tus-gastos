@@ -1,6 +1,7 @@
 package com.caoc.authservice.domain.model;
 
 
+import com.caoc.documents.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,17 +10,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthUserDto {
-    @NotBlank(message = "El campo 'nombre' no puede estar en blanco")
-    @Size(max = 50, message = "El campo 'nombre' no debe tener más de 50 caracteres")
+    private String id;
+    @NotBlank
+    @Size(min = 4, max = 50, message = "Username must be between 4 and 50 characters long")
     private String username;
-    @Email(message = "El campo 'email' debe ser un email válido")
     private String email;
-    @NotBlank(message = "El campo 'password' no puede estar en blanco")
-    @Size(min = 8, message = "El campo 'password' debe tener al menos 8 caracteres")
+    @NotBlank
+    @Size(min = 4, message = "Password must be at least 4 characters long")
     private String password;
+    private Boolean enabled;
+    private List<Role> roles;
 }

@@ -1,19 +1,15 @@
 package com.caoc.microservice.user.infrastructure.entrypoints;
 
-import com.caoc.exception.RequestValidationException;
 import com.caoc.microservice.user.domain.model.UserDto;
 import com.caoc.microservice.user.domain.usecase.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -46,7 +42,7 @@ public class Handler {
                     Errors errors = new BeanPropertyBindingResult(dto, UserDto.class.getName());
                     validator.validate(dto, errors);
                     if (errors.hasErrors())
-                        throw new RequestValidationException(errors.getAllErrors().getFirst().getDefaultMessage());
+                        throw new RuntimeException(errors.getAllErrors().getFirst().getDefaultMessage());
                     return dto;
                 })
                 .flatMap(userUseCase::save)

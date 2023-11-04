@@ -1,10 +1,10 @@
 package com.caoc.microservice.user.infrastructure.drivenadapters.repository;
 
-import com.caoc.documents.AuthUser;
-import com.caoc.documents.Role;
 import com.caoc.microservice.user.domain.model.UserDto;
 import com.caoc.microservice.user.infrastructure.drivenadapters.crud.IRoleCrudRepository;
 import com.caoc.microservice.user.infrastructure.drivenadapters.crud.IUserCrudRepository;
+import com.caoc.microservice.user.infrastructure.drivenadapters.documents.AuthUser;
+import com.caoc.microservice.user.infrastructure.drivenadapters.documents.Role;
 import lombok.RequiredArgsConstructor;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor

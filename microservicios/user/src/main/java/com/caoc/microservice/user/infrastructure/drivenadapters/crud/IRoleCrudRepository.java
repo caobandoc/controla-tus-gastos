@@ -1,6 +1,6 @@
 package com.caoc.microservice.user.infrastructure.drivenadapters.crud;
 
-import com.caoc.documents.Role;
+import com.caoc.microservice.user.infrastructure.drivenadapters.documents.Role;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 

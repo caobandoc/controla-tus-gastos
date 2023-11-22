@@ -5,3 +5,42 @@ services:
     container_name: zipkin
     ports:
       - "9411:9411"
+  config-server:
+    image: config-server:0.0.1
+    container_name: config-server
+    ports:
+      - "8888:8888"
+  eureka-server:
+    image: eureka-server:0.0.1
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+  gateway-server:
+    image: gateway-server:0.0.1
+    container_name: gateway-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+      - eureka-server
+  auth-service:
+    image: auth-service:0.0.1
+    #image: auth-server:0.0.2
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - eureka-server
+      - gateway-server
+  user-service:
+    image: user-service:0.0.1
+    container_name: user-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+      - eureka-server
+      - gateway-server

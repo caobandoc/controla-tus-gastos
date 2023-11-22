@@ -5,7 +5,20 @@ spring:
     config:
       server:
         git:
-          uri: file:///F:/ESTUDIO/controla-tus-gastos/ignore
-          #uri: /media/caobandoc/DATAEx/ESTUDIO/controla-tus-gastos/ignore
+          uri: ${GIT_URI:file:///F:/ESTUDIO/controla-tus-gastos/config/configserver/ignore}
 server:
   port: 8888
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKASERVER_URI:http://localhost:8761/eureka}
+management:
+  endpoint:
+    health:
+      show-details: always
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

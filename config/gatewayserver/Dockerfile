@@ -15,5 +15,4 @@ ENV CONFIGSERVER_URI=http://host.docker.internal:8888
 
 EXPOSE 8080
 
-#Esperar 20 segundos y ejecutar el comando
-CMD ["sh", "-c", "sleep 20 && java -jar /app.jar"]
+CMD ["java", "-jar", "/app.jar"]

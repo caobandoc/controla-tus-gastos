@@ -13,6 +13,7 @@ COPY --from=builder /app/build/libs/*.jar /app.jar
 COPY --from=builder /app/ignore/ /ignore/
 
 ENV GIT_URI=file:///ignore/
+ENV GIT_SEARCHPATHS=docker
 ENV EUREKASERVER_URI=http://host.docker.internal:8761/eureka
 
 EXPOSE 8888

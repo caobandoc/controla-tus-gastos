@@ -15,8 +15,9 @@ public class RestConsumer implements TokenGateway {
     private final WebClient webClient;
     @Override
     public Mono<TokenDto> validateToken(String token) {
-        return webClient.post()
-                .uri("lb://auth-service/api/v1/auth/validate?token=" + token)
+        return webClient.get()
+                .uri("lb://auth-service/api/v1/auth/validate")
+                .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .bodyToMono(TokenDto.class);
     }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -27,7 +27,7 @@ import { routes } from '../../app.routes';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(4)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -39,6 +39,12 @@ export class LoginComponent {
     private _snackBar: MatSnackBar,
     private router: Router
   ) { }
+
+  ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.router.navigate(['/app']);
+    }
+  }
 
   onSubmit() {
     if (this.loginForm.valid) {

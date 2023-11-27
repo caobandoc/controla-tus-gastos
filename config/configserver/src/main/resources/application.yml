@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: ${GIT_URI:file:///F:/ESTUDIO/controla-tus-gastos/config/configserver/ignore}
+          uri: ${GIT_URI:file:///I:/ESTUDIO/controla-tus-gastos/config/configserver/ignore}
         defaultLabel: ${GIT_SEARCHPATHS:main}
 server:
   port: 8888

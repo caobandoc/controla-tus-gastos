@@ -17,19 +17,18 @@ public class AuthUserUseCase {
 
     public Mono<TokenDto> login(AuthUserDto dto){
         return authUserRepository.findByUsername(dto.getUsername())
-                .map(authUser -> {
+                .flatMap(authUser -> {
                     if (passwordEncoder.matches(dto.getPassword(), authUser.getPassword())) {
                         try {
-                            return TokenDto.builder()
+                            return Mono.just(TokenDto.builder()
                                     .token(jwtProvider.createToken(authUser))
-                                    .build();
+                                    .build());
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }
                     }
-                    return null;
-                })
-                .switchIfEmpty(Mono.error(new RuntimeException("User or Password incorrect")));
+                    return Mono.error(new RuntimeException("User or Password incorrect"));
+                });
     }
 
     public Mono<TokenDto> validate(String token){

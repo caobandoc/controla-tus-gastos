@@ -1,33 +1,28 @@
 @echo off
 
-cd %~dp0\config\configserver
-echo Building configserver...
-docker build -t config-server:0.0.1 .
-cd ..
+echo Building backend projects...
 
-cd eurekaserver
-echo Building eurekaserver...
-docker build -t eureka-server:0.0.1 .
-cd ..
+cd backend/configserver
+call build_configserver.bat
 
-cd gatewayserver
-echo Building gatewayserver...
-docker build -t gateway-server:0.0.1 .
-cd ..
+cd ../eurekaserver
+call build_eurekaserver.bat
 
-cd ..\microservicios\authservice
-echo Building authservice...
-docker build -t auth-service:0.0.1 .
-cd ..
+cd ../gatewayserver
+call build_gatewayserver.bat
 
-cd authservice2
-echo Building authservice2...
-docker build -t auth-service:0.0.2 .
-cd ..
+cd ../microservicios/authservice
+call build_authservice.bat
 
-cd userservice
-echo Building userservice...
-docker build -t user-service:0.0.1 .
-cd ..
+cd ../authservice2
+call build_authservice.bat
+
+cd ../userservice
+call build_userservice.bat
+
+echo Build frontend projects...
+
+cd ../../../frontend/controla-tus-gastos-angular
+call build_angular.bat
 
 echo Build completed for all projects.

@@ -1,0 +1,17 @@
+# Ignora archivos y directorios generados por npm y ng
+node_modules
+dist
+tmp
+out-tsc
+*.swp
+
+# Ignora archivos y directorios generados por IDEs y editores de texto
+.idea
+.vscode
+
+# Ignora archivos y directorios específicos de Angular
+e2e
+.angular-cli.json
+karma.conf.js
+protractor.conf.js
+.angular

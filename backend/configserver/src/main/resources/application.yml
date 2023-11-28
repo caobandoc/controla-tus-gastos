@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_URI:file:///I:/ESTUDIO/controla-tus-gastos/config/configserver/ignore}
+        defaultLabel: ${GIT_SEARCHPATHS:main}
+server:
+  port: 8888
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKASERVER_URI:http://localhost:8761/eureka}
+management:
+  endpoint:
+    health:
+      show-details: always
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,18 @@
+nav{
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px 16px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+span{
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

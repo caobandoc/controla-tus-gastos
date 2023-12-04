@@ -27,7 +27,7 @@ public class AuthUserUseCase {
                             throw new RuntimeException(e);
                         }
                     }
-                    return Mono.error(new RuntimeException("User or Password incorrect"));
+                    return Mono.error(new RuntimeException("Usuario o contraseña incorrecta"));
                 });
     }
 

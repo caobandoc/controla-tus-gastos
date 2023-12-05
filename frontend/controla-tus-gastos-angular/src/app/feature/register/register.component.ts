@@ -8,33 +8,36 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+//service
+import { UserService } from '../../core/services/user.service';
+
 //models
-import { UserLogin } from '../../core/models/user';
+import { UserRegister } from '../../core/models/user';
 import { TokenService } from '../../core/services/token.service';
 import { routes } from '../../app.routes';
 
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule, MatInputModule,
     MatSelectModule, MatFormFieldModule, MatButtonModule
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent implements OnInit {
-  loginForm = new FormGroup({
+export class RegisterComponent implements OnInit {
+  registerForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.required, Validators.email])
   });
 
   constructor(
-    private authService: AuthService,
+    private userService: UserService,
     private tokenService: TokenService,
     private _snackBar: MatSnackBar,
     private router: Router
@@ -47,18 +50,18 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      let userLogin: UserLogin = {
-        username: this.loginForm.controls.username.value,
-        password: this.loginForm.controls.password.value
+    if (this.registerForm.valid) {
+      let userRegister: UserRegister = {
+        username: this.registerForm.controls.username.value,
+        password: this.registerForm.controls.password.value,
+        email: this.registerForm.controls.email.value
       };
-      this.authService.login(userLogin).subscribe({
-        next: response => {
-          this.tokenService.setToken(response.token);
-          this.router.navigate(['/app']);
+      this.userService.register(userRegister).subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
         },
         error: error => {
-          this._snackBar.open(error.error, 'Close', {
+          this._snackBar.open(error.error.detail, 'Close', {
             duration: 2000,
           });
         }
@@ -67,8 +70,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onRegister() {
-    this.router.navigate(['/register']);
+  login() {
+    this.router.navigate(['/login']);
   }
 
 }

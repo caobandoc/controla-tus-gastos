@@ -8,6 +8,7 @@ import { NotfoundComponent } from './feature/notfound/notfound.component';
 
 //guards
 import { authGuard } from './core/guards/auth.guard';
+import { RegisterComponent } from './feature/register/register.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
     //loadChildren: () => import('./feature/login/login.routes').then(m => m.routes)
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+    //loadChildren: () => import('./feature/register/register.routes').then(m => m.routes)
   },
   {
     path: 'app',

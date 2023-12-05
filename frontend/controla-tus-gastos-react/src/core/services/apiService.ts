@@ -1,9 +1,7 @@
-interface LoginResponse {
-  token: string;
-}
+import { TokenModel } from '../models/response/token.model';
 
 const apiService = {
-  login: async (username: string, password: string): Promise<LoginResponse> => {
+  login: async (username: string, password: string): Promise<TokenModel> => {
     const response = await fetch('http://localhost:8080/api/v1/auth/login', {
       method: 'POST',
       headers: {
@@ -13,7 +11,6 @@ const apiService = {
     });
 
     if (!response.ok) {
-      //recuperar el mensaje de error, esta en el body como texto plano
       const message = await response.text();
       throw new Error(message);
     }

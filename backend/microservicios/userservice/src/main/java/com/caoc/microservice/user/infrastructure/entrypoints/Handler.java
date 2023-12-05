@@ -57,7 +57,7 @@ public class Handler {
                     .status(HttpStatus.CONFLICT)
                     .bodyValue(ProblemDetail
                             .forStatusAndDetail(HttpStatus.CONFLICT,
-                                    "Username or Email already exists"));
+                                    "usuario o email ya existe"));
             default -> ServerResponse
                     .badRequest()
                     .bodyValue(ProblemDetail

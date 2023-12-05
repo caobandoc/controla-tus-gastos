@@ -13,6 +13,7 @@ import Admin from "./feature/admin/Admin.tsx";
 
 //mui
 import CssBaseline from "@mui/material/CssBaseline";
+import Register from "./feature/register/Register.tsx";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     {
         path: "/app",
         element: <Admin />,
+    },
+    {
+        path: "/register",
+        element: <Register />,
     },
     {
         path: "*",

@@ -20,15 +20,4 @@ public class SecurityConfig {
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable);
         return http.build();
     }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
-        configuration.setAllowedMethods(Collections.singletonList(CorsConfiguration.ALL));
-        configuration.setAllowedHeaders(Collections.singletonList(CorsConfiguration.ALL));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 }

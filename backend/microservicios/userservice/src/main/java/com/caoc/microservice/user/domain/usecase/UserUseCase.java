@@ -1,6 +1,7 @@
 package com.caoc.microservice.user.domain.usecase;
 
 import com.caoc.microservice.user.domain.model.UserDto;
+import com.caoc.microservice.user.domain.model.UserResponseDto;
 import com.caoc.microservice.user.infrastructure.drivenadapters.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,8 +21,12 @@ public class UserUseCase {
         return userRepository.findByEmail(email);
     }
 
-    public Mono<UserDto> save(UserDto userDto) {
+    public Mono<UserResponseDto> save(UserDto userDto) {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userRepository.save(userDto);
+        return userRepository.save(userDto)
+                .map(user -> UserResponseDto.builder()
+                            .username(user.getUsername())
+                            .email(user.getEmail())
+                            .build());
     }
 }

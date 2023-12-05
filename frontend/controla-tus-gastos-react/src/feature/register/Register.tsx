@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
+import "./register.css";
 
 //mui
 import { Button, useTheme } from "@mui/material";
@@ -9,10 +9,9 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 //services
-import apiService from "../../core/services/apiService";
-import { validToken, setToken } from "../../core/services/tokenService";
+import userRegister from "../../core/services/userService";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     //variables
     const theme = useTheme();
     const primaryColor = theme.palette.primary.main;
@@ -21,6 +20,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     //hooks
+    const [email, setEmail] = useState<string | null>(null);
     const [usuario, setUsuario] = useState<string | null>(null);
     const [contraseña, setContraseña] = useState<string | null>(null);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
@@ -28,26 +28,21 @@ const Login: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     //useEffect
-    //validacion de token
-    useEffect(() => {
-        const token: boolean = validToken();
-        if (token) {
-            navigate("/app");
-        }
-    }, [navigate]);
     //validacion de campos
     useEffect(() => {
         if (
             usuario &&
             usuario.length > 3 &&
             contraseña &&
-            contraseña.length > 5
+            contraseña.length > 5 &&
+            email &&
+            validateEmail(email)
         ) {
             setIsSubmitDisabled(false);
         } else {
             setIsSubmitDisabled(true);
         }
-    }, [usuario, contraseña]);
+    }, [usuario, contraseña, email]);
 
     //extra renders
     //advertencias
@@ -71,24 +66,34 @@ const Login: React.FC = () => {
         }
         return null;
     };
+    const alertEmail = () => {
+        if (email) {
+            if (email?.length === 0) {
+                return <p>El email es requerido</p>;
+            } else if (email && !validateEmail(email)) {
+                return <p>El email no es valido</p>;
+            }
+        }
+        return null;
+    };
 
     //functions
     //handlerButton
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (usuario && contraseña) {
-            apiService
-                .login(usuario, contraseña)
-                .then((response) => {
-                    setToken(response.token);
-                    navigate("/app");
-                })
-                .catch((error) => {
-                    setError(error.message);
-                    console.log(error);
-                    setOpenAlert(true);
-                });
+        if (usuario && contraseña && email) {
+            userRegister
+            .register(usuario, contraseña, email)
+            .then(() => navigate("/login"))
+            .catch((error) => {
+                setError(error.message);
+                setOpenAlert(true);
+            });
         }
+    };
+    const validateEmail = (email: string) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
     };
 
     const handleClose = (
@@ -107,6 +112,15 @@ const Login: React.FC = () => {
             <div className="login-container">
                 <h2>LOGIN</h2>
                 <form onSubmit={handleSubmit}>
+                    <div>
+                        <TextField
+                            id="email"
+                            label="email"
+                            variant="standard"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    {alertEmail()}
                     <div>
                         <TextField
                             id="usuario"
@@ -131,12 +145,12 @@ const Login: React.FC = () => {
                         variant="contained"
                         disabled={isSubmitDisabled}
                     >
-                        Iniciar sesión
+                        Registrarse
                     </Button>
                 </form>
                 <hr />
-                <Button onClick={() => navigate("/register")} variant="text">
-                    Registrarse
+                <Button onClick={() => navigate("/login")} variant="text">
+                    Ingresar
                 </Button>
             </div>
 
@@ -164,4 +178,4 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default Login;
+export default Register;

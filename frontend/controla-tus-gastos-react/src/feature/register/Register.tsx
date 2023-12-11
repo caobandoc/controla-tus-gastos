@@ -136,6 +136,7 @@ const Register: React.FC = () => {
                             id="contraseña"
                             label="contraseña"
                             variant="standard"
+                            type="password"
                             onChange={(e) => setContraseña(e.target.value)}
                         />
                     </div>

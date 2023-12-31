@@ -1,4 +1,4 @@
-package com.caoc.authservice.infrastructure.entrypoints;
+package com.caoc.accountservice.infrastructure.entrypoints.reactiveweb;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +18,8 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route()
                 .path(contextPath, builder -> builder
-                        .POST("/login", handler::login)
-                        .GET("/validate", handler::validate)
-                        .GET("/claims", handler::claims)
+                        .GET("", handler::getAllAccounts)
+                        .POST("", handler::createAccount)
                 )
                 .build();
     }

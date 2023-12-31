@@ -42,4 +42,10 @@ public class Handler {
                 .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
     }
 
+    public Mono<ServerResponse> claims(ServerRequest serverRequest) {
+        return authUserUseCase.claims(serverRequest.headers()
+                        .header(HttpHeaders.AUTHORIZATION).getFirst().replace("Bearer ", ""))
+                .flatMap(claims -> ServerResponse.ok().bodyValue(claims))
+                .onErrorResume(error -> ServerResponse.badRequest().bodyValue(error.getMessage()));
+    }
 }

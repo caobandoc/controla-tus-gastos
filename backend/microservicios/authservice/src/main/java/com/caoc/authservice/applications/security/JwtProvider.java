@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtProvider{
@@ -32,6 +33,8 @@ public class JwtProvider{
     public String createToken(AuthUserDto authUser) throws JsonProcessingException {
 
         String username = authUser.getUsername();
+        String email = authUser.getEmail();
+        String id = authUser.getId();
 
         Collection<? extends GrantedAuthority> roles = authUser.getRoles()
                 .stream().map(role -> new SimpleGrantedAuthority(role.getName()))
@@ -41,6 +44,8 @@ public class JwtProvider{
         Claims claims = Jwts.claims()
                 .add("authorities", new ObjectMapper().writeValueAsString(roles))
                 .add("isAdmin", isAdmin)
+                .add("id", id)
+                .add("email", email)
                 .build();
 
         return Jwts.builder()
@@ -61,12 +66,15 @@ public class JwtProvider{
         }
     }
 
-    public String getUserNameFromToken(String token) {
+    public Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
+                .getPayload();
+    }
+
+    public String getUserNameFromToken(String token) {
+        return getClaims(token).getSubject();
     }
 }

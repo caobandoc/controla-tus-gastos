@@ -1,4 +1,4 @@
-package com.caoc.microservice.user.infrastructure.drivenadapters.repository;
+package com.caoc.microservice.user.infrastructure.drivenadapters.adapter;
 
 import com.caoc.microservice.user.domain.model.UserDto;
 import com.caoc.microservice.user.infrastructure.drivenadapters.crud.IRoleCrudRepository;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class UserRepository {
+public class UserAdapter {
     private final IUserCrudRepository iUserCrudRepository;
     private final IRoleCrudRepository iRoleCrudRepository;
     private final ObjectMapper objectMapper;

@@ -11,6 +11,8 @@ call build_eurekaserver.bat
 cd ../gatewayserver
 call build_gatewayserver.bat
 
+echo Build microservices projects...
+
 cd ../microservicios/authservice
 call build_authservice.bat
 
@@ -19,6 +21,9 @@ call build_authservice.bat
 
 cd ../userservice
 call build_userservice.bat
+
+cd ../accountservice
+call build_accountservice.bat
 
 echo Build frontend projects...
 

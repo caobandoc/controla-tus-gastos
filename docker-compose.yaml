@@ -35,6 +35,12 @@ services:
     ports:
       - "8082:8082"
     command: ["sh", "-c", "sleep 30 && java -jar /app.jar"]
+  account-service:
+    image: account-service:0.0.1
+    container_name: account-service
+    ports:
+      - "8083:8083"
+    command: ["sh", "-c", "sleep 30 && java -jar /app.jar"]
   frontend-angular:
     image: controla-tus-gastos-angular:0.0.1
     container_name: controla-tus-gastos-angular

@@ -9,6 +9,7 @@ import { NotfoundComponent } from './feature/notfound/notfound.component';
 //guards
 import { authGuard } from './core/guards/auth.guard';
 import { RegisterComponent } from './feature/register/register.component';
+import {loginGuard} from "./core/guards/login.guard";
 
 export const routes: Routes = [
   {
@@ -17,19 +18,19 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [loginGuard],
     component: LoginComponent
-    //loadChildren: () => import('./feature/login/login.routes').then(m => m.routes)
   },
   {
     path: 'register',
+    canActivate: [loginGuard],
     component: RegisterComponent
-    //loadChildren: () => import('./feature/register/register.routes').then(m => m.routes)
   },
   {
     path: 'app',
     component: AdminComponent,
     canActivate: [authGuard],
-    //loadChildren: () => import('./feature/admin/admin.routes').then(m => m.routes)
+    loadChildren: () => import('./feature/admin/admin.routes').then(m => m.routes)
   },
   {
     path: '**',

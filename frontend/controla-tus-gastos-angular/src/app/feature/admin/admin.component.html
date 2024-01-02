@@ -1,1 +1,21 @@
-<p>admin works!</p>
+<mat-toolbar color="primary">
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Controla tus gastos</span>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    desconectarse
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="sidenav" mode="side" opened>
+    <p>Contenido del Sidenav</p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,13 @@
+<div class="container">
+  @defer (when loadListAccounts) {
+    @if (listAccounts.length) {
+      @for (account of listAccounts; track account.id) {
+        <app-account [account]="account"/>
+      }
+    } @else {
+      <p>no accounts</p>
+    }
+  } @placeholder {
+    <div class="loader"></div>
+  }
+</div>

@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="login-container">
+    <h2>LOGIN</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label for="username">usuario</mat-label>
+        <input matInput id="username" type="text" formControlName="username">
+      </mat-form-field>
+
+      @if (registerForm.controls.username.invalid
+      && (registerForm.controls.username.dirty
+        || registerForm.controls.username.touched)) {
+        @if (registerForm.controls.username.errors?.['required']) {
+          <mat-error>
+            El usuario es requerido
+          </mat-error>
+        }
+        @if (registerForm.controls.username.errors?.['minlength']) {
+          <mat-error>
+            El usuario debe tener al menos 4 caracteres
+          </mat-error>
+        }
+      }
+
+      <mat-form-field appearance="outline">
+        <mat-label for="email">email</mat-label>
+        <input matInput id="email" type="email" formControlName="email">
+      </mat-form-field>
+
+      @if (registerForm.controls.email.invalid
+      && (registerForm.controls.email.dirty
+        || registerForm.controls.email.touched)) {
+        @if (registerForm.controls.email.errors?.['required']) {
+          <mat-error>
+            El email es requerido
+          </mat-error>
+        }
+        @if (registerForm.controls.email.errors?.['email']) {
+          <mat-error>
+            El email debe ser válido
+          </mat-error>
+        }
+      }
+
+      <mat-form-field appearance="outline">
+        <mat-label for="password">contraseña</mat-label>
+        <input matInput id="password" type="password" formControlName="password">
+      </mat-form-field>
+
+      @if (registerForm.controls.password.invalid
+      && (registerForm.controls.password.dirty
+        || registerForm.controls.password.touched)) {
+        @if (registerForm.controls.password.errors?.['required']) {
+          <mat-error>
+            La contraseña es requerida
+          </mat-error>
+        }
+        @if (registerForm.controls.password.errors?.['minlength']) {
+          <mat-error>
+            La contraseña debe tener al menos 6 caracteres
+          </mat-error>
+        }
+      }
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">
+        Registrarse
+      </button>
+    </form>
+
+    <hr>
+
+    <button mat-raised-button color="primary" (click)="login()">
+      Iniciar sesión
+    </button>
+  </div>
+</div>

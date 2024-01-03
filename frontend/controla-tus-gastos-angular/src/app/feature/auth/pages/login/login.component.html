@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="login-container">
+    <h2>LOGIN</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label for="username">usuario</mat-label>
+        <input matInput id="username" type="text" formControlName="username">
+      </mat-form-field>
+
+      @if (loginForm.controls.username.invalid
+      && (loginForm.controls.username.dirty
+        || loginForm.controls.username.touched)) {
+        @if (loginForm.controls.username.errors?.['required']) {
+          <mat-error>
+            El usuario es requerido
+          </mat-error>
+        }
+        @if (loginForm.controls.username.errors?.['minlength']) {
+          <mat-error>
+            El usuario debe tener al menos 4 caracteres
+          </mat-error>
+        }
+      }
+
+      <mat-form-field appearance="outline">
+        <mat-label for="password">contraseña</mat-label>
+        <input matInput id="password" type="password" formControlName="password">
+      </mat-form-field>
+
+      @if (loginForm.controls.password.invalid
+      && (loginForm.controls.password.dirty
+        || loginForm.controls.password.touched)) {
+        @if (loginForm.controls.password.errors?.['required']) {
+          <mat-error>
+            La contraseña es requerida
+          </mat-error>
+        }
+        @if (loginForm.controls.password.errors?.['minlength']) {
+          <mat-error>
+            La contraseña debe tener al menos 6 caracteres
+          </mat-error>
+        }
+      }
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+        Ingresar
+      </button>
+
+    </form>
+
+    <hr>
+    <button mat-raised-button color="primary" (click)="onRegister()">
+      Registrarse
+    </button>
+  </div>
+</div>

@@ -1,14 +1,14 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
 //components
-import { HomeComponent } from './feature/home/home.component';
-import { LoginComponent } from './feature/login/login.component';
-import { AdminComponent } from './feature/admin/admin.component';
-import { NotfoundComponent } from './feature/notfound/notfound.component';
+import {AdminComponent} from './feature/admin/admin.component';
+import {HomeComponent} from './feature/home/home.component';
+import {LoginComponent} from './feature/auth/pages/login/login.component';
+import {NotfoundComponent} from './feature/notfound/notfound.component';
+import {RegisterComponent} from './feature/auth/pages/register/register.component';
 
 //guards
-import { authGuard } from './core/guards/auth.guard';
-import { RegisterComponent } from './feature/register/register.component';
+import {authGuard} from './core/guards/auth.guard';
 import {loginGuard} from "./core/guards/login.guard";
 
 export const routes: Routes = [

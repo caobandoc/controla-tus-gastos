@@ -8,12 +8,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 //models
-import { UserLogin } from '../../core/models/user';
-import { TokenService } from '../../core/services/token.service';
+import { UserLogin } from '../../../../core/models/user';
+import { TokenService } from '../../../../core/services/token.service';
 
 
 @Component({

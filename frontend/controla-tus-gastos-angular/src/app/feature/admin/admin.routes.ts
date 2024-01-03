@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 //components
-import {AccountsComponent} from "./components/accounts/accounts.component";
+import {AccountsComponent} from "./pages/accounts/accounts.component";
 
 
 export const routes: Routes = [

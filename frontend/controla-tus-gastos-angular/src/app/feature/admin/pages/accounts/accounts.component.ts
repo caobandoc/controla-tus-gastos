@@ -6,7 +6,7 @@ import {AccountService} from "../../../../core/services/account.service";
 
 //models
 import {Account} from "../../../../core/models/account";
-import {AccountComponent} from "../account/account.component";
+import {AccountComponent} from "../../components/account/account.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatGridListModule} from "@angular/material/grid-list";
 

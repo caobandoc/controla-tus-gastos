@@ -11,12 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 //service
-import { UserService } from '../../core/services/user.service';
+import { UserService } from '../../../../core/services/user.service';
 
 //models
-import { UserRegister } from '../../core/models/user';
-import { TokenService } from '../../core/services/token.service';
-import { routes } from '../../app.routes';
+import { UserRegister } from '../../../../core/models/user';
+import { TokenService } from '../../../../core/services/token.service';
+import { routes } from '../../../../app.routes';
 
 
 @Component({

@@ -8,11 +8,13 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {TokenService} from "../../core/services/token.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatSidenavModule, MatIconModule, MatToolbarModule, MatButtonModule],
+  imports: [CommonModule, RouterOutlet, MatSidenavModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })

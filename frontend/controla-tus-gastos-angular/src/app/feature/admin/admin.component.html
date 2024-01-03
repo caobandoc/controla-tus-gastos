@@ -1,21 +1,23 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Controla tus gastos</span>
-  <span class="spacer"></span>
-  <button mat-raised-button (click)="logout()">
-    <mat-icon>logout</mat-icon>
-    desconectarse
-  </button>
-</mat-toolbar>
+<div class="container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Controla tus gastos</span>
+    <span class="spacer"></span>
+    <button mat-raised-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      desconectarse
+    </button>
+  </mat-toolbar>
 
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav class="sidenav" mode="side" opened>
-    <p>Contenido del Sidenav</p>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer mode="side" opened>
+      <p>Contenido del Sidenav</p>
+    </mat-drawer>
+    <mat-drawer-content>
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
 
-</mat-sidenav-container>

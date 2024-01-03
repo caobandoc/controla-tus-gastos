@@ -20,6 +20,7 @@ public class RouterRest {
                 .path(contextPath, builder -> builder
                         .GET("", handler::getAllAccounts)
                         .POST("", handler::createAccount)
+                        .PUT("", handler::updateAccount)
                 )
                 .build();
     }

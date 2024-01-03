@@ -9,4 +9,6 @@ public interface AccountRepository {
     Mono<Account> save(Account account) ;
 
     Flux<Account> findAllByUserId(String userId);
+
+    Mono<Account> findById(String id);
 }

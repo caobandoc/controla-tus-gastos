@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Registrar cuenta</h2>
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre de la cuenta</mat-label>
+      <input matInput placeholder="Nombre de la cuenta" formControlName="name">
+    </mat-form-field>
+    @if (accountForm.controls.name.invalid) {
+      <mat-error>El nombre de usuario es requerido</mat-error>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de cuenta</mat-label>
+      <mat-select formControlName="typeAccount">
+        @for (typeAccount of typeAccounts; track typeAccount) {
+          <mat-option [value]="typeAccount">
+            {{ typeAccount }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    @if (accountForm.controls.typeAccount.invalid) {
+      <mat-error>El tipo de cuenta es requerido</mat-error>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Balance</mat-label>
+      <input matInput type="number" placeholder="Balance" formControlName="amount">
+    </mat-form-field>
+    @if (accountForm.controls.amount.invalid) {
+      <mat-error>El balance es requerido</mat-error>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de moneda</mat-label>
+      <mat-select formControlName="currency">
+        @for (currency of currencies; track currency) {
+          <mat-option [value]="currency">
+            {{ currency }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    @if (accountForm.controls.currency.invalid) {
+      <mat-error>El tipo de moneda es requerido</mat-error>
+    }
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">Registrar</button>
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+
+  </form>
+
+</div>

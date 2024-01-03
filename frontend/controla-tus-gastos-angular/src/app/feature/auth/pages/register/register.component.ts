@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,8 +15,6 @@ import { UserService } from '../../../../core/services/user.service';
 
 //models
 import { UserRegister } from '../../../../core/models/user';
-import { TokenService } from '../../../../core/services/token.service';
-import { routes } from '../../../../app.routes';
 
 
 @Component({
@@ -29,7 +27,7 @@ import { routes } from '../../../../app.routes';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   registerForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(4)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -38,17 +36,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private tokenService: TokenService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-    if (this.tokenService.getToken()) {
-      this.router.navigate(['/app']);
-    }
-  }
-
   onSubmit() {
     if (this.registerForm.valid) {
       let userRegister: UserRegister = {

@@ -1,5 +1,6 @@
 <div class="container">
-  @defer (when loadListAccounts) {
+<!--  @defer (when loadListAccounts) {-->
+      @defer (on timer(20s)) {
     @if (listAccounts.length) {
       @for (account of listAccounts; track account.id) {
         <app-account [account]="account"/>
@@ -8,6 +9,13 @@
       <p>no accounts</p>
     }
   } @placeholder {
-    <div class="loader"></div>
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+
   }
 </div>
+
+<button mat-fab color="primary" class="floating-button" (click)="createAccount()">
+  <mat-icon>add</mat-icon>
+</button>

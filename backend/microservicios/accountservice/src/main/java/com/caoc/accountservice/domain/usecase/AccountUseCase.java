@@ -12,6 +12,11 @@ public class AccountUseCase {
     private final AccountRepository accountRepository;
     private final ClaimsRepository claimsRepository;
 
+    public Flux<Account> getAllAccountsByUserId(String bearerToken) {
+        return claimsRepository.getClaims(bearerToken)
+                .flatMapMany(claims -> accountRepository.findAllByUserId(claims.getId()));
+    }
+
     public Mono<Account> createAccount(Account account, String bearerToken) {
         return claimsRepository.getClaims(bearerToken)
                 .flatMap(claims -> {
@@ -20,8 +25,8 @@ public class AccountUseCase {
                 });
     }
 
-    public Flux<Account> getAllAccountsByUserId(String bearerToken) {
-        return claimsRepository.getClaims(bearerToken)
-                .flatMapMany(claims -> accountRepository.findAllByUserId(claims.getId()));
+    public Mono<Account> updateAccount(Account account) {
+        return accountRepository.findById(account.getId())
+                .flatMap(account1 -> accountRepository.save(account));
     }
 }

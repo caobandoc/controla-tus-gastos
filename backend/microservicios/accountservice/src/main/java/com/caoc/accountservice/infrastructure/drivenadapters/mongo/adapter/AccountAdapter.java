@@ -27,4 +27,11 @@ public class AccountAdapter implements AccountRepository {
         return accountCrudRepository.findAllByUserId(userId)
                 .map(obj -> objectMapper.map(obj, Account.class));
     }
+
+    @Override
+    public Mono<Account> findById(String id) {
+        return accountCrudRepository.findById(id)
+                .map(obj -> objectMapper.map(obj, Account.class));
+    }
+
 }

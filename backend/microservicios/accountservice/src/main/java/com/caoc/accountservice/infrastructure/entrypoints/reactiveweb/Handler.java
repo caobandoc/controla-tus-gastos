@@ -39,4 +39,14 @@ public class Handler {
                     return ServerResponse.badRequest().bodyValue(error.getMessage());
                 });
     }
+
+    public Mono<ServerResponse> updateAccount(ServerRequest serverRequest) {
+        return serverRequest.bodyToMono(Account.class)
+                .flatMap(accountUseCase::updateAccount)
+                .flatMap(account -> ServerResponse.ok().bodyValue(account))
+                .onErrorResume(error -> {
+                    log.error("Error updating account", error);
+                    return ServerResponse.badRequest().bodyValue(error.getMessage());
+                });
+    }
 }

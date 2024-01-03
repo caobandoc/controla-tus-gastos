@@ -1,7 +1,15 @@
 export interface Account {
-  id: string;
+  id: string|null;
   name: string;
-  typeAccount: 'SAVINGS' | 'CURRENT';
+  typeAccount: string;
   amount: number;
   currency: string;
+}
+
+export interface EUAccount{
+  id: string|null;
+  name: string|null;
+  typeAccount: string|null;
+  amount: number|null;
+  currency: string|null;
 }

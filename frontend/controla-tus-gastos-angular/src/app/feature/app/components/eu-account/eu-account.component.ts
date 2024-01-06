@@ -25,6 +25,7 @@ import {MatButtonModule} from "@angular/material/button";
 export class EuAccountComponent {
   accountForm = new FormGroup({
     id: new FormControl('' ),
+    userId: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     typeAccount: new FormControl('', [Validators.required]),
     amount: new FormControl(0, [Validators.required]),
@@ -45,10 +46,13 @@ export class EuAccountComponent {
   constructor(
     private accountService: AccountService,
     private dialogRef: MatDialogRef<EuAccountComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EUAccount
+    @Inject(MAT_DIALOG_DATA) public data: EUAccount | string
   ) {
-    if (data) {
+    if (typeof data === 'string') {
+      this.accountForm.controls.userId.setValue(data);
+    } else {
       this.accountForm.controls.id.setValue(data.id);
+      this.accountForm.controls.userId.setValue(data.userId);
       this.accountForm.controls.name.setValue(data.name);
       this.accountForm.controls.typeAccount.setValue(data.typeAccount);
       this.accountForm.controls.amount.setValue(data.amount);
@@ -60,6 +64,7 @@ export class EuAccountComponent {
     if (this.accountForm.valid) {
       let account: EUAccount = {
         id: this.accountForm.controls.id.value !=='' ? this.accountForm.controls.id.value : null,
+        userId: this.accountForm.controls.userId.value !=='' ? this.accountForm.controls.userId.value : null,
         name: this.accountForm.controls.name.value,
         typeAccount: this.accountForm.controls.typeAccount.value,
         amount: this.accountForm.controls.amount.value,

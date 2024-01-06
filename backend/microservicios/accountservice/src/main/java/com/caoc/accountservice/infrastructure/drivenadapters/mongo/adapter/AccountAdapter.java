@@ -34,4 +34,9 @@ public class AccountAdapter implements AccountRepository {
                 .map(obj -> objectMapper.map(obj, Account.class));
     }
 
+    @Override
+    public Mono<Void> deleteById(String id) {
+        return accountCrudRepository.deleteById(id);
+    }
+
 }

@@ -11,4 +11,6 @@ public interface AccountRepository {
     Flux<Account> findAllByUserId(String userId);
 
     Mono<Account> findById(String id);
+
+    Mono<Void> deleteById(String id);
 }

@@ -13,6 +13,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {EuAccountComponent} from "../../components/eu-account/eu-account.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TokenService} from "../../../../core/services/token.service";
 
 @Component({
   selector: 'app-accounts',
@@ -24,13 +25,21 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class AccountsComponent{
   listAccounts: Account[] = [];
   loadListAccounts: boolean = false;
+  userId: string | null;
 
   constructor(
-    private AccountService: AccountService,
+    private accountService: AccountService,
+    private tokenService: TokenService,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {
-    this.AccountService.getAccounts().subscribe({
+    this.userId = this.tokenService.getId();
+    if (!this.userId) {
+      this.openSnackBar("No se pudo obtener el id del usuario","Cerrar");
+      return;
+    }
+
+    this.accountService.getAccounts(this.userId).subscribe({
       next: response => {
         this.listAccounts = response;
       },
@@ -47,21 +56,61 @@ export class AccountsComponent{
     const dialogRef = this.dialog.open(EuAccountComponent,{
       height: '500px',
       width: '500px',
+      data: this.userId
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.AccountService.createAccount(result).subscribe({
+        this.accountService.createAccount(result).subscribe({
           next: response => {
             this.openSnackBar("Cuenta creada correctamente","Cerrar");
             this.listAccounts.push(response);
           },
           error: error => {
             console.error('There was an error!', error);
-          },
-          complete: () => {
           }
         });
+      }
+    });
+  }
+
+  updateAccount(account: Account){
+    const dialogRef = this.dialog.open(EuAccountComponent,{
+      height: '500px',
+      width: '500px',
+      data: account
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.accountService.updateAccount(result).subscribe({
+          next: response => {
+            this.openSnackBar("Cuenta actualizada correctamente","Cerrar");
+            this.listAccounts = this.listAccounts.map((item)=>{
+              if(item.id === response.id){
+                return response;
+              }
+              return item;
+            });
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        });
+      }
+    });
+  }
+
+  deleteAccount(id: string){
+    this.accountService.deleteAccount(id).subscribe({
+      next: response => {
+        this.openSnackBar("Cuenta eliminada correctamente","Cerrar");
+        this.listAccounts = this.listAccounts.filter(
+          (item)=>item.id !== id
+        )
+      },
+      error: error => {
+        console.error('There was an error!', error);
       }
     });
   }

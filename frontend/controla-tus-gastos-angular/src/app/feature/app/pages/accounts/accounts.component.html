@@ -1,9 +1,13 @@
 <div class="container">
-<!--  @defer (when loadListAccounts) {-->
-      @defer (on timer(20s)) {
+  @defer (when loadListAccounts) {
+    <!--      @defer (on timer(20s)) {-->
     @if (listAccounts.length) {
       @for (account of listAccounts; track account.id) {
-        <app-account [account]="account"/>
+        <app-account
+          [account]="account"
+          (updateAccount)="updateAccount($event)"
+          (deleteAccount)="deleteAccount($event)"
+        />
       }
     } @else {
       <p>no accounts</p>

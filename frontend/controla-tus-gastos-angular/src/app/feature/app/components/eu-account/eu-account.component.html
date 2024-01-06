@@ -46,7 +46,13 @@
     }
 
     <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">Registrar</button>
+      <button mat-raised-button color="primary" type="submit">
+        @if (accountForm.controls.id.value) {
+          Actualizar
+        }@else {
+          Registrar
+        }
+      </button>
       <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancelar</button>
     </div>
 

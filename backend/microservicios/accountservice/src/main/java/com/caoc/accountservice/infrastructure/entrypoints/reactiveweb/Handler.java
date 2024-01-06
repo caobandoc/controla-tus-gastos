@@ -18,35 +18,25 @@ public class Handler {
     private final AccountUseCase accountUseCase;
 
     public Mono<ServerResponse> getAllAccounts(ServerRequest serverRequest) {
-        String bearerToken = serverRequest.headers().header("Authorization").getFirst();
-        return accountUseCase.getAllAccountsByUserId(bearerToken)
+        return accountUseCase.getAllAccountsByUserId(serverRequest.pathVariable("userId"))
                 .collectList()
-                .flatMap(accounts -> ServerResponse.ok().bodyValue(accounts))
-                .onErrorResume(error -> {
-                    log.error("Error getting all accounts", error);
-                    return ServerResponse.badRequest().bodyValue(error.getMessage());
-                });
-
+                .flatMap(accounts -> ServerResponse.ok().bodyValue(accounts));
     }
 
     public Mono<ServerResponse> createAccount(ServerRequest serverRequest) {
-        String bearerToken = serverRequest.headers().header("Authorization").getFirst();
         return serverRequest.bodyToMono(Account.class)
-                .flatMap(account -> accountUseCase.createAccount(account, bearerToken))
-                .flatMap(account -> ServerResponse.ok().bodyValue(account))
-                .onErrorResume(error -> {
-                    log.error("Error creating account", error);
-                    return ServerResponse.badRequest().bodyValue(error.getMessage());
-                });
+                .flatMap(accountUseCase::createAccount)
+                .flatMap(account -> ServerResponse.ok().bodyValue(account));
     }
 
     public Mono<ServerResponse> updateAccount(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(Account.class)
                 .flatMap(accountUseCase::updateAccount)
-                .flatMap(account -> ServerResponse.ok().bodyValue(account))
-                .onErrorResume(error -> {
-                    log.error("Error updating account", error);
-                    return ServerResponse.badRequest().bodyValue(error.getMessage());
-                });
+                .flatMap(account -> ServerResponse.ok().bodyValue(account));
+    }
+
+    public Mono<ServerResponse> deleteAccount(ServerRequest serverRequest) {
+        return accountUseCase.deleteAccount(serverRequest.pathVariable("id"))
+                .then(ServerResponse.ok().build());
     }
 }

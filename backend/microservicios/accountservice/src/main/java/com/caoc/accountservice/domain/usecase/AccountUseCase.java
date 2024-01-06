@@ -10,23 +10,20 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class AccountUseCase {
     private final AccountRepository accountRepository;
-    private final ClaimsRepository claimsRepository;
 
-    public Flux<Account> getAllAccountsByUserId(String bearerToken) {
-        return claimsRepository.getClaims(bearerToken)
-                .flatMapMany(claims -> accountRepository.findAllByUserId(claims.getId()));
+    public Flux<Account> getAllAccountsByUserId(String userId) {
+        return accountRepository.findAllByUserId(userId);
     }
 
-    public Mono<Account> createAccount(Account account, String bearerToken) {
-        return claimsRepository.getClaims(bearerToken)
-                .flatMap(claims -> {
-                    account.setUserId(claims.getId());
-                    return accountRepository.save(account);
-                });
+    public Mono<Account> createAccount(Account account) {
+        return accountRepository.save(account);
     }
 
     public Mono<Account> updateAccount(Account account) {
-        return accountRepository.findById(account.getId())
-                .flatMap(account1 -> accountRepository.save(account));
+        return accountRepository.save(account);
+    }
+
+    public Mono<Void> deleteAccount(String id) {
+        return accountRepository.deleteById(id);
     }
 }

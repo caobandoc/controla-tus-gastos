@@ -4,11 +4,11 @@
     <mat-card-subtitle>{{ account.amount | currency:account.currency:'symbol':'1.0-2' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
-    <button mat-flat-button color="primary" disabled>
+    <button mat-flat-button color="primary" (click)="onUpdateAccount()">
       <mat-icon>edit</mat-icon>
       Actualizar
     </button>
-    <button mat-flat-button color="warn" disabled>
+    <button mat-flat-button color="warn" (click)="onDeleteAccount()">
       <mat-icon>delete</mat-icon>
       Eliminar
     </button>

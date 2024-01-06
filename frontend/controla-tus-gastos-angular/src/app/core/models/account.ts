@@ -1,5 +1,6 @@
 export interface Account {
-  id: string|null;
+  id: string;
+  userId: string;
   name: string;
   typeAccount: string;
   amount: number;
@@ -8,6 +9,7 @@ export interface Account {
 
 export interface EUAccount{
   id: string|null;
+  userId: string | null;
   name: string|null;
   typeAccount: string|null;
   amount: number|null;

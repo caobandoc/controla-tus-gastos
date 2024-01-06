@@ -18,9 +18,10 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route()
                 .path(contextPath, builder -> builder
-                        .GET("", handler::getAllAccounts)
+                        .GET("/{userId}", handler::getAllAccounts)
                         .POST("", handler::createAccount)
                         .PUT("", handler::updateAccount)
+                        .DELETE("/{id}", handler::deleteAccount)
                 )
                 .build();
     }

@@ -1,16 +1,17 @@
 package com.caoc.accountservice.domain.model.account.gateway;
 
-import com.caoc.accountservice.domain.model.account.Account;
+import com.caoc.accountservice.domain.model.account.EUAccount;
+import com.caoc.accountservice.domain.model.account.ResponseAccount;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface AccountRepository {
 
-    Mono<Account> save(Account account) ;
+    Mono<ResponseAccount> save(EUAccount responseAccount) ;
 
-    Flux<Account> findAllByUserId(String userId);
+    Flux<ResponseAccount> findAllByUserId(String userId);
 
-    Mono<Account> findById(String id);
+    Mono<ResponseAccount> findById(String id);
 
     Mono<Void> deleteById(String id);
 }

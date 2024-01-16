@@ -1,4 +1,4 @@
-import {Component, Inject, signal} from '@angular/core';
+import {Component, Inject, OnInit, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
@@ -14,6 +14,8 @@ import {Account, EUAccount} from "../../../../core/models/account";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
+import {CatalogService} from "../../../../core/services/catalog.service";
+import {Catalog} from "../../../../core/models/catalog";
 
 @Component({
   selector: 'app-eu-account',
@@ -22,41 +24,48 @@ import {MatButtonModule} from "@angular/material/button";
   templateUrl: './eu-account.component.html',
   styleUrl: './eu-account.component.css'
 })
-export class EuAccountComponent {
+export class EuAccountComponent implements OnInit{
   accountForm = new FormGroup({
     id: new FormControl('' ),
     userId: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    typeAccount: new FormControl('', [Validators.required]),
+    typeAccountId: new FormControl('', [Validators.required]),
     amount: new FormControl(0, [Validators.required]),
-    currency: new FormControl('', [Validators.required])
+    currencyId: new FormControl('', [Validators.required])
   });
 
-  typeAccounts = [
-    'SAVINGS',
-    'CURRENT'
-  ];
+  typeAccounts:Catalog[] = [];
 
-  currencies = [
-    'EUR',
-    'USD',
-    'COP'
-  ];
+  currencies:Catalog[] = [];
 
   constructor(
     private accountService: AccountService,
+    private catalogService: CatalogService,
     private dialogRef: MatDialogRef<EuAccountComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EUAccount | string
+    @Inject(MAT_DIALOG_DATA) public data: Account | string
   ) {
-    if (typeof data === 'string') {
-      this.accountForm.controls.userId.setValue(data);
+    this.catalogService.getCatalogAccounts().subscribe({
+      next: typeAccounts => this.typeAccounts = typeAccounts,
+      error: error => console.log(error)
+    });
+
+    this.catalogService.getCatalogCurrencies().subscribe({
+      next: currencies => this.currencies = currencies,
+      error: error => console.log(error)
+    });
+
+  }
+
+  ngOnInit(): void {
+    if (typeof this.data === 'string') {
+      this.accountForm.controls.userId.setValue(this.data);
     } else {
-      this.accountForm.controls.id.setValue(data.id);
-      this.accountForm.controls.userId.setValue(data.userId);
-      this.accountForm.controls.name.setValue(data.name);
-      this.accountForm.controls.typeAccount.setValue(data.typeAccount);
-      this.accountForm.controls.amount.setValue(data.amount);
-      this.accountForm.controls.currency.setValue(data.currency);
+      this.accountForm.controls.id.setValue(this.data.id);
+      this.accountForm.controls.userId.setValue(this.data.userId);
+      this.accountForm.controls.name.setValue(this.data.name);
+      this.accountForm.controls.typeAccountId.setValue(this.data.typeAccount.id);
+      this.accountForm.controls.amount.setValue(this.data.amount);
+      this.accountForm.controls.currencyId.setValue(this.data.currency.id);
     }
   }
 
@@ -66,9 +75,9 @@ export class EuAccountComponent {
         id: this.accountForm.controls.id.value !=='' ? this.accountForm.controls.id.value : null,
         userId: this.accountForm.controls.userId.value !=='' ? this.accountForm.controls.userId.value : null,
         name: this.accountForm.controls.name.value,
-        typeAccount: this.accountForm.controls.typeAccount.value,
+        typeAccountId: this.accountForm.controls.typeAccountId.value,
         amount: this.accountForm.controls.amount.value,
-        currency: this.accountForm.controls.currency.value
+        currencyId: this.accountForm.controls.currencyId.value
       };
       if (account.id) {
         this.accountService.updateAccount(account).subscribe({

@@ -1,17 +1,20 @@
+import {TypeAccount} from "./typeAccount";
+import {Currency} from "./currency";
+
 export interface Account {
   id: string;
   userId: string;
   name: string;
-  typeAccount: string;
+  typeAccount: TypeAccount;
   amount: number;
-  currency: string;
+  currency: Currency;
 }
 
 export interface EUAccount{
   id: string|null;
   userId: string | null;
   name: string|null;
-  typeAccount: string|null;
+  typeAccountId: string|null;
   amount: number|null;
-  currency: string|null;
+  currencyId: string|null;
 }

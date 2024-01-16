@@ -1,6 +1,7 @@
 package com.caoc.accountservice.infrastructure.entrypoints.reactiveweb;
 
-import com.caoc.accountservice.domain.model.account.Account;
+import com.caoc.accountservice.domain.model.account.EUAccount;
+import com.caoc.accountservice.domain.model.account.ResponseAccount;
 import com.caoc.accountservice.domain.usecase.AccountUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +25,15 @@ public class Handler {
     }
 
     public Mono<ServerResponse> createAccount(ServerRequest serverRequest) {
-        return serverRequest.bodyToMono(Account.class)
+        return serverRequest.bodyToMono(EUAccount.class)
                 .flatMap(accountUseCase::createAccount)
-                .flatMap(account -> ServerResponse.ok().bodyValue(account));
+                .flatMap(responseAccount -> ServerResponse.ok().bodyValue(responseAccount));
     }
 
     public Mono<ServerResponse> updateAccount(ServerRequest serverRequest) {
-        return serverRequest.bodyToMono(Account.class)
+        return serverRequest.bodyToMono(EUAccount.class)
                 .flatMap(accountUseCase::updateAccount)
-                .flatMap(account -> ServerResponse.ok().bodyValue(account));
+                .flatMap(responseAccount -> ServerResponse.ok().bodyValue(responseAccount));
     }
 
     public Mono<ServerResponse> deleteAccount(ServerRequest serverRequest) {

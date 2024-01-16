@@ -1,6 +1,7 @@
 package com.caoc.accountservice.infrastructure.drivenadapters.mongo.adapter;
 
-import com.caoc.accountservice.domain.model.account.Account;
+import com.caoc.accountservice.domain.model.account.EUAccount;
+import com.caoc.accountservice.domain.model.account.ResponseAccount;
 import com.caoc.accountservice.domain.model.account.gateway.AccountRepository;
 import com.caoc.accountservice.infrastructure.drivenadapters.mongo.crud.AccountCrudRepository;
 import com.caoc.accountservice.infrastructure.drivenadapters.mongo.documents.AccountDto;
@@ -17,21 +18,21 @@ public class AccountAdapter implements AccountRepository {
     private final ObjectMapper objectMapper;
 
     @Override
-    public Mono<Account> save(Account account) {
-        return accountCrudRepository.save(objectMapper.map(account, AccountDto.class))
-                .map(obj -> objectMapper.map(obj, Account.class));
+    public Mono<ResponseAccount> save(EUAccount responseAccount) {
+        return accountCrudRepository.save(objectMapper.map(responseAccount, AccountDto.class))
+                .map(obj -> objectMapper.map(obj, ResponseAccount.class));
     }
 
     @Override
-    public Flux<Account> findAllByUserId(String userId) {
+    public Flux<ResponseAccount> findAllByUserId(String userId) {
         return accountCrudRepository.findAllByUserId(userId)
-                .map(obj -> objectMapper.map(obj, Account.class));
+                .map(obj -> objectMapper.map(obj, ResponseAccount.class));
     }
 
     @Override
-    public Mono<Account> findById(String id) {
+    public Mono<ResponseAccount> findById(String id) {
         return accountCrudRepository.findById(id)
-                .map(obj -> objectMapper.map(obj, Account.class));
+                .map(obj -> objectMapper.map(obj, ResponseAccount.class));
     }
 
     @Override

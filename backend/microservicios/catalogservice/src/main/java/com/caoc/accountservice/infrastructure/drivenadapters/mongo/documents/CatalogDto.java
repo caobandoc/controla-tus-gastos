@@ -4,12 +4,9 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "accounts")
-public class AccountDto {
+@Document(collection = "catalogs")
+public class CatalogDto {
     private String id;
+    private String value;
     private String name;
-    private String userId;
-    private String typeAccountId;
-    private Double amount;
-    private String currencyId;
 }

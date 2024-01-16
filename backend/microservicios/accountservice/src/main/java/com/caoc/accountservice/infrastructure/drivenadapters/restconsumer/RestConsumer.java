@@ -1,8 +1,8 @@
 package com.caoc.accountservice.infrastructure.drivenadapters.restconsumer;
 
-import com.caoc.accountservice.domain.model.claims.Claims;
-import com.caoc.accountservice.domain.model.claims.gateway.ClaimsRepository;
-import com.caoc.accountservice.infrastructure.drivenadapters.restconsumer.model.ClaimsDto;
+import com.caoc.accountservice.domain.model.catalog.Catalog;
+import com.caoc.accountservice.domain.model.catalog.gateway.CatalogRepository;
+import com.caoc.accountservice.infrastructure.drivenadapters.restconsumer.model.CatalogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivecommons.utils.ObjectMapper;
@@ -13,21 +13,22 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RestConsumer implements ClaimsRepository {
+public class RestConsumer implements CatalogRepository {
     private final WebClient client;
     private final ObjectMapper objectMapper;
 
     @Override
-    public Mono<Claims> getClaims(String bearerToken) {
+    public Mono<Catalog> getCatalogById(String id) {
+        log.info("getCatalogById: {}", id);
         return client.get()
-                .uri("/claims")
-                .header("Authorization", bearerToken)
+                .uri("/id/{id}", id)
                 .retrieve()
-                .bodyToMono(ClaimsDto.class)
+                .bodyToMono(CatalogDto.class)
                 .map(this::map);
     }
 
-    private Claims map(ClaimsDto claimsDto) {
-        return objectMapper.map(claimsDto, Claims.class);
+    private Catalog map(CatalogDto catalogDto) {
+        return objectMapper.map(catalogDto, Catalog.class);
     }
+
 }

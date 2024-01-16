@@ -3,11 +3,11 @@ package com.caoc.accountservice.domain.model.account;
 import lombok.Data;
 
 @Data
-public class Account {
+public class EUAccount {
     private String id;
     private String name;
     private String userId;
-    private TypeAccount typeAccount;
+    private String typeAccountId;
     private Double amount;
-    private String currency;
+    private String currencyId;
 }

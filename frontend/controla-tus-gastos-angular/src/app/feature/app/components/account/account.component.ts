@@ -18,8 +18,14 @@ export class AccountComponent {
     userId: '0a',
     name: "test",
     amount: 0,
-    typeAccount: "test",
-    currency: "test"
+    typeAccount: {
+      id: '0a',
+      name: "test"
+    },
+    currency: {
+      id: '0a',
+      name: "test"
+    }
   }
   @Output() updateAccount = new EventEmitter<Account>();
   @Output() deleteAccount = new EventEmitter<string>();

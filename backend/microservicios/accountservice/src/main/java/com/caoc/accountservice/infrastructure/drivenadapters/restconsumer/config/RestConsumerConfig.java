@@ -26,7 +26,7 @@ public class RestConsumerConfig {
 
     @Bean
     public WebClient getWebClient(WebClient.Builder builder,
-                                  @Value("${adapter.restconsumer.url}") String url,
+                                  @Value("${adapter.restconsumer.url-catalog}") String url,
                                   @Value("${adapter.restconsumer.timeout}") int timeout) {
         return builder
                 .baseUrl(url)
